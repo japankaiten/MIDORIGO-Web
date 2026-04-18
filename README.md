@@ -85,5 +85,5 @@ sips -z 512 512 public/assets/midorigo-logo.png --out public/assets/icon-512.png
 - Complete privacy and terms legal review.
 - Decide whether the contact form should remain `mailto:` or connect to a production backend/form service.
 - Configure a stable production domain.
-- Replace `https://midorigo.app` in `sitemap.xml` and `robots.txt` if the production domain changes.
+- Replace `https://midorigo.vercel.app` in `sitemap.xml` and `robots.txt` if the production domain changes.
 - Add the legal entity address if required by app stores, platform rules, or applicable law.

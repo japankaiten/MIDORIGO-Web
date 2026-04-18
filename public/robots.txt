@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# TODO: Replace https://midorigo.app if the final production domain changes.
-Sitemap: https://midorigo.app/sitemap.xml
+Sitemap: https://midorigo.vercel.app/sitemap.xml
