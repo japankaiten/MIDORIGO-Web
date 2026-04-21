@@ -1,19 +1,19 @@
 import { FaqList, PageHero, Section } from '../components/Page';
-import { SUPPORT_EMAIL, supportFaqs } from '../content';
+import { useLocale } from '../i18n';
 
 export function Support() {
+  const { t } = useLocale();
+  const [before, after] = t.support.outro.split(t.common.supportEmail);
+
   return (
     <>
-      <PageHero
-        eyebrow="Support"
-        title="Help using MIDORIGO"
-        intro="Find quick answers for marketplace listings, language settings, location setup, camera access, notifications, account help, and reporting incorrect information."
-      />
-      <Section title="Troubleshooting">
-        <FaqList items={supportFaqs} />
+      <PageHero eyebrow={t.support.eyebrow} title={t.support.title} intro={t.support.intro} />
+      <Section title={t.support.sectionTitle}>
+        <FaqList items={t.support.faq} />
         <p className="support-note">
-          Need more help? Contact <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> and include your device,
-          app version if available, selected city or area, and a short description of the issue.
+          {before}
+          <a href={`mailto:${t.common.supportEmail}`}>{t.common.supportEmail}</a>
+          {after}
         </p>
       </Section>
     </>

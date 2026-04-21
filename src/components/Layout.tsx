@@ -1,7 +1,47 @@
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { APP_NAME, routes } from '../content';
+import { languages, useLocale } from '../i18n';
+
+const languageFlags: Record<string, string> = {
+  en: 'GB',
+  ja: 'JP',
+  ko: 'KR',
+  zh: 'CN',
+  id: 'ID',
+  hi: 'IN',
+  my: 'MM',
+  vi: 'VN',
+  es: 'ES',
+};
+
+function countryFlag(code: string) {
+  return code
+    .toUpperCase()
+    .split('')
+    .map((char) => String.fromCodePoint(127397 + char.charCodeAt(0)))
+    .join('');
+}
 
 export function Layout() {
+  const { language, setLanguage, t } = useLocale();
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const localizedRoutes = [
+    { ...routes[0], label: t.routes.home },
+    { ...routes[1], label: t.routes.privacy },
+    { ...routes[2], label: t.routes.terms },
+    { ...routes[3], label: t.routes.contact },
+    { ...routes[4], label: t.routes.support },
+    { ...routes[5], label: t.routes.deleteAccount },
+  ];
+
+  useEffect(() => {
+    document.body.style.overflow = isLanguageOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isLanguageOpen]);
+
   return (
     <div className="app-shell">
       <header className="site-header">
@@ -9,16 +49,29 @@ export function Layout() {
           <img className="brand-logo" src="/assets/midorigo-logo.png" alt="" width="34" height="34" />
           <span className="brand-text">
             <span>{APP_NAME}</span>
-            <span lang="ja">ミドリゴ</span>
+            <span lang="ja">{t.common.appNameJa}</span>
           </span>
         </a>
-        <nav className="site-nav" aria-label="Primary navigation">
-          {routes.slice(1, 5).map((route) => (
-            <NavLink key={route.href} to={route.href}>
-              {route.label}
-            </NavLink>
-          ))}
-        </nav>
+        <div className="header-actions">
+          <nav className="site-nav" aria-label="Primary navigation">
+            {localizedRoutes.slice(1, 5).map((route) => (
+              <NavLink key={route.href} to={route.href}>
+                {route.label}
+              </NavLink>
+            ))}
+          </nav>
+          <button
+            className="language-trigger"
+            type="button"
+            aria-label={t.common.language}
+            aria-expanded={isLanguageOpen}
+            onClick={() => setIsLanguageOpen(true)}
+          >
+            <span className="flag-badge" aria-hidden="true">
+              {countryFlag(languageFlags[language])}
+            </span>
+          </button>
+        </div>
       </header>
       <main>
         <Outlet />
@@ -31,30 +84,58 @@ export function Layout() {
                 <img className="footer-logo" src="/assets/midorigo-logo.png" alt="" width="28" height="28" />
                 <span className="brand-text">
                   <span>{APP_NAME}</span>
-                  <span lang="ja">ミドリゴ</span>
+                  <span lang="ja">{t.common.appNameJa}</span>
                 </span>
               </a>
-              <p>
-                Circular economy listings, local trade, neighborhood information, and municipality-oriented waste
-                support for residents in Japan.
-              </p>
+              <p>{t.common.footerAbout}</p>
             </div>
             <nav className="footer-links" aria-label="Footer navigation">
               <div>
-                <h2>Legal and support</h2>
-                <a href="/privacy">Privacy</a>
-                <a href="/terms">Terms</a>
-                <a href="/support">Support</a>
-                <a href="/contact">Contact</a>
+                <h2>{t.common.legalAndSupport}</h2>
+                <a href="/privacy">{t.routes.privacy}</a>
+                <a href="/terms">{t.routes.terms}</a>
+                <a href="/support">{t.routes.support}</a>
+                <a href="/contact">{t.routes.contact}</a>
               </div>
             </nav>
           </div>
           <div className="footer-bottom">
-            <span>© 2026 MIDORIGO</span>
-            <span>Independent platform unless separately stated.</span>
+            <span>{t.common.copyright}</span>
+            <span>{t.common.independent}</span>
           </div>
         </div>
       </footer>
+
+      {isLanguageOpen ? (
+        <div className="language-overlay" role="dialog" aria-modal="true" aria-label={t.common.language}>
+          <div className="language-modal">
+            <div className="language-modal-header">
+              <h2>{t.common.language}</h2>
+              <button className="language-close" type="button" onClick={() => setIsLanguageOpen(false)}>
+                ×
+              </button>
+            </div>
+            <div className="language-list">
+              {languages.map((item) => (
+                <button
+                  key={item.code}
+                  className={`language-option${language === item.code ? ' active' : ''}`}
+                  type="button"
+                  onClick={() => {
+                    setLanguage(item.code);
+                    setIsLanguageOpen(false);
+                  }}
+                >
+                  <span className="flag-badge" aria-hidden="true">
+                    {countryFlag(languageFlags[item.code])}
+                  </span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
