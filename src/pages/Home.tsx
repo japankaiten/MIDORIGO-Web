@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaqList, InfoCard, Section } from '../components/Page';
 import { useLocale } from '../i18n';
 
@@ -21,12 +22,9 @@ export function Home() {
             <p className="tagline">{t.home.tagline}</p>
             <p>{t.home.intro}</p>
             <div className="hero-actions">
-              <a className="button primary" href="#availability">
+              <Link className="button primary" to="/early-access">
                 {t.home.ctaAvailability}
-              </a>
-              <a className="button secondary" href="/support">
-                {t.home.ctaSupport}
-              </a>
+              </Link>
             </div>
           </div>
           <div className="phone-showcase" aria-label={t.home.previewLabel}>

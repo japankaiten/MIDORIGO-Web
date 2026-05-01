@@ -746,6 +746,117 @@ h3 {
   resize: vertical;
 }
 
+.signup-shell {
+  display: grid;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.signup-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.signup-card h2 {
+  margin-bottom: 0;
+}
+
+.signup-form {
+  display: grid;
+  gap: 18px;
+}
+
+.device-fieldset {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.device-fieldset legend,
+.signup-form label span {
+  color: var(--color-secondary);
+  font-weight: 750;
+}
+
+.signup-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.signup-form input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0 14px;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.device-toggle {
+  display: grid;
+  gap: 10px;
+}
+
+.device-option {
+  min-height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-secondary);
+  background: var(--color-surface);
+  font-weight: 750;
+}
+
+.device-option.active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, white);
+}
+
+.signup-note,
+.inline-backlink {
+  color: var(--color-muted);
+}
+
+.signup-note {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.inline-backlink {
+  font-weight: 650;
+}
+
+.signup-feedback {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  line-height: 1.6;
+}
+
+.signup-feedback strong,
+.signup-feedback p {
+  margin: 0;
+}
+
+.signup-feedback.success {
+  border-color: color-mix(in srgb, var(--color-success) 50%, var(--color-border));
+  background: color-mix(in srgb, var(--color-success) 10%, white);
+}
+
+.signup-feedback.error {
+  border-color: color-mix(in srgb, var(--color-error) 50%, var(--color-border));
+  background: color-mix(in srgb, var(--color-error) 8%, white);
+}
+
 .support-note {
   margin-top: 22px;
 }
@@ -831,7 +942,8 @@ h3 {
 
   .screenshot-grid,
   .split-panel,
-  .contact-grid {
+  .contact-grid,
+  .device-toggle {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -926,7 +1038,8 @@ h3 {
 
   .info-card,
   .contact-form,
-  .support-box {
+  .support-box,
+  .signup-card {
     padding: 16px;
   }
 
