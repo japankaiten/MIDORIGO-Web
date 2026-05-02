@@ -26,6 +26,7 @@ function countryFlag(code: string) {
 export function Layout() {
   const { language, setLanguage, t } = useLocale();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const localizedRoutes = [
     { ...routes[0], label: t.routes.home },
     { ...routes[1], label: t.routes.privacy },
@@ -36,11 +37,35 @@ export function Layout() {
   ];
 
   useEffect(() => {
-    document.body.style.overflow = isLanguageOpen ? 'hidden' : '';
+    document.body.style.overflow = isLanguageOpen || isMenuOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isLanguageOpen]);
+  }, [isLanguageOpen, isMenuOpen]);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        setIsLanguageOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 621px)');
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleViewportChange);
+    return () => mediaQuery.removeEventListener('change', handleViewportChange);
+  }, []);
 
   return (
     <div className="app-shell">
@@ -61,11 +86,29 @@ export function Layout() {
             ))}
           </nav>
           <button
+            className={`menu-trigger${isMenuOpen ? ' open' : ''}`}
+            type="button"
+            aria-label={t.common.menu ?? 'Menu'}
+            aria-controls="mobile-site-menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => {
+              setIsLanguageOpen(false);
+              setIsMenuOpen((current) => !current);
+            }}
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
+          <button
             className="language-trigger"
             type="button"
             aria-label={t.common.language}
             aria-expanded={isLanguageOpen}
-            onClick={() => setIsLanguageOpen(true)}
+            onClick={() => {
+              setIsMenuOpen(false);
+              setIsLanguageOpen(true);
+            }}
           >
             <span className="flag-badge" aria-hidden="true">
               {countryFlag(languageFlags[language])}
@@ -136,6 +179,35 @@ export function Layout() {
           </div>
         </div>
       ) : null}
+
+      <div
+        className={`mobile-menu-overlay${isMenuOpen ? ' open' : ''}`}
+        aria-hidden={!isMenuOpen}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        <div
+          id="mobile-site-menu"
+          className={`mobile-menu-panel${isMenuOpen ? ' open' : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t.common.menu ?? 'Menu'}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="mobile-menu-header">
+            <span>{APP_NAME}</span>
+            <button className="mobile-menu-close" type="button" onClick={() => setIsMenuOpen(false)}>
+              ×
+            </button>
+          </div>
+          <nav className="mobile-menu-nav" aria-label="Mobile navigation">
+            {localizedRoutes.slice(1, 5).map((route) => (
+              <NavLink key={route.href} to={route.href} onClick={() => setIsMenuOpen(false)}>
+                {route.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,26 @@
 import { useMemo, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { PageHero, Section } from '../components/Page';
+import { Link, useNavigate } from 'react-router-dom';
+import { Section } from '../components/Page';
 import { useLocale, type LanguageCode } from '../i18n';
 import { EARLY_ACCESS_TABLE, supabase } from '../lib/supabase';
 
 type Platform = 'ios' | 'android';
+
+function PlatformIcon({ platform }: { platform: Platform }) {
+  if (platform === 'ios') {
+    return (
+      <svg className="platform-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M15.4 5.2c.9-1.1 1.3-2.3 1.2-3.5-1.2.1-2.5.8-3.3 1.8-.8.9-1.4 2.2-1.2 3.4 1.3.1 2.5-.6 3.3-1.7ZM18.5 12.8c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-2-3.6-2.1-1.5-.2-3 .9-3.7.9-.8 0-1.9-.9-3.2-.9-1.6 0-3.2 1-4 2.4-1.7 2.9-.4 7.2 1.2 9.5.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7 1.4 0 1.8.7 3 .7 1.3 0 2.1-1.1 2.9-2.2.9-1.3 1.3-2.7 1.3-2.8-.1 0-2.5-1-2.5-3.4Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="platform-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7.1 8.5 5 4.8l1.8-1 2.5 4.2h5.3l2.5-4.2 1.8 1-2.1 3.7A5.8 5.8 0 0 1 20 13v6.5a1.5 1.5 0 1 1-3 0V18H7v1.5a1.5 1.5 0 1 1-3 0V13c0-1.8.8-3.4 2.1-4.5ZM8 12.5h.01M16 12.5h.01M7.5 10h9a2 2 0 0 1 2 2V16H5.5v-4a2 2 0 0 1 2-2Z" />
+    </svg>
+  );
+}
 
 type EarlyAccessCopy = {
   eyebrow: string;
@@ -24,6 +40,7 @@ type EarlyAccessCopy = {
   successBody: string;
   duplicateTitle: string;
   duplicateBody: string;
+  modalAction: string;
   errorConfig: string;
   errorGeneric: string;
   backHome: string;
@@ -38,7 +55,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: 'Reserve your spot',
     cardLead: 'Pick the device you plan to use, then enter the email you want us to contact.',
     deviceLabel: 'Your device',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'Email address',
     emailPlaceholder: 'you@example.com',
@@ -52,6 +69,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     duplicateTitle: 'You are already on the list',
     duplicateBody:
       'This email is already registered for that device. We will email you when MIDORIGO early access is ready.',
+    modalAction: 'Go to home',
     errorConfig: 'Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.',
     errorGeneric: 'We could not save your registration right now. Please try again in a moment.',
     backHome: 'Back to home',
@@ -63,7 +81,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: '先行アクセスを予約',
     cardLead: '利用予定の端末を選び、連絡を受け取りたいメールアドレスを入力してください。',
     deviceLabel: '利用端末',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'メールアドレス',
     emailPlaceholder: 'you@example.com',
@@ -77,6 +95,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     duplicateTitle: 'すでに登録されています',
     duplicateBody:
       'このメールアドレスは、その端末向けにすでに登録されています。MIDORIGOの先行案内準備ができ次第メールでご連絡します。',
+    modalAction: 'ホームへ戻る',
     errorConfig: 'Supabaseがまだ設定されていません。.env に VITE_SUPABASE_URL と VITE_SUPABASE_ANON_KEY を追加してください。',
     errorGeneric: '現在登録を保存できませんでした。少し待ってから再度お試しください。',
     backHome: 'ホームへ戻る',
@@ -88,7 +107,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: '자리 예약',
     cardLead: '사용할 기기를 선택한 뒤 연락받을 이메일을 입력하세요.',
     deviceLabel: '사용 기기',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: '이메일 주소',
     emailPlaceholder: 'you@example.com',
@@ -99,6 +118,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: '얼리 액세스에 등록해 주셔서 감사합니다. MIDORIGO는 곧 제공될 예정입니다. 얼리 액세스 안내와 다음 정보를 이메일로 확인해 주세요.',
     duplicateTitle: '이미 등록되어 있습니다',
     duplicateBody: '이 이메일은 해당 기기로 이미 등록되어 있습니다. MIDORIGO 얼리 액세스 준비가 되면 이메일로 안내드리겠습니다.',
+    modalAction: '홈으로 돌아가기',
     errorConfig: 'Supabase가 아직 설정되지 않았습니다. .env에 VITE_SUPABASE_URL과 VITE_SUPABASE_ANON_KEY를 추가하세요.',
     errorGeneric: '지금은 등록을 저장할 수 없습니다. 잠시 후 다시 시도해 주세요.',
     backHome: '홈으로 돌아가기',
@@ -110,7 +130,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: '预留名额',
     cardLead: '选择你计划测试的设备，然后填写你希望接收通知的邮箱。',
     deviceLabel: '你的设备',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: '电子邮箱',
     emailPlaceholder: 'you@example.com',
@@ -121,6 +141,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: '感谢你加入抢先体验。MIDORIGO 即将开放，请留意邮箱中的抢先体验通知和后续说明。',
     duplicateTitle: '你已经在名单中',
     duplicateBody: '这个邮箱已为该设备注册。MIDORIGO 抢先体验准备好后，我们会通过邮件通知你。',
+    modalAction: '返回首页',
     errorConfig: 'Supabase 还没有配置。请在 .env 中添加 VITE_SUPABASE_URL 和 VITE_SUPABASE_ANON_KEY。',
     errorGeneric: '暂时无法保存你的注册，请稍后再试。',
     backHome: '返回首页',
@@ -132,7 +153,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: 'Pesan tempat Anda',
     cardLead: 'Pilih perangkat yang akan Anda gunakan, lalu masukkan email yang ingin kami hubungi.',
     deviceLabel: 'Perangkat Anda',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'Alamat email',
     emailPlaceholder: 'you@example.com',
@@ -143,6 +164,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: 'Terima kasih sudah mendaftar akses awal. MIDORIGO akan segera tersedia. Mohon periksa email Anda untuk pembaruan akses awal dan langkah berikutnya.',
     duplicateTitle: 'Anda sudah terdaftar',
     duplicateBody: 'Email ini sudah terdaftar untuk perangkat tersebut. Kami akan mengirim email saat akses awal MIDORIGO siap.',
+    modalAction: 'Kembali ke beranda',
     errorConfig: 'Supabase belum dikonfigurasi. Tambahkan VITE_SUPABASE_URL dan VITE_SUPABASE_ANON_KEY di .env.',
     errorGeneric: 'Kami belum bisa menyimpan pendaftaran Anda sekarang. Silakan coba lagi sebentar lagi.',
     backHome: 'Kembali ke beranda',
@@ -154,7 +176,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: 'अपनी जगह सुरक्षित करें',
     cardLead: 'जिस डिवाइस का आप उपयोग करेंगे उसे चुनें, फिर वह ईमेल दर्ज करें जिस पर हम संपर्क करें।',
     deviceLabel: 'आपका डिवाइस',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'ईमेल पता',
     emailPlaceholder: 'you@example.com',
@@ -165,6 +187,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: 'प्रारंभिक एक्सेस में जुड़ने के लिए धन्यवाद। MIDORIGO जल्द उपलब्ध होगा। कृपया प्रारंभिक एक्सेस अपडेट और अगले चरणों के लिए अपना ईमेल देखते रहें।',
     duplicateTitle: 'आप पहले से सूची में हैं',
     duplicateBody: 'यह ईमेल उस डिवाइस के लिए पहले से पंजीकृत है। MIDORIGO प्रारंभिक एक्सेस तैयार होने पर हम आपको ईमेल करेंगे।',
+    modalAction: 'होम पर जाएँ',
     errorConfig: 'Supabase अभी कॉन्फ़िगर नहीं है। .env में VITE_SUPABASE_URL और VITE_SUPABASE_ANON_KEY जोड़ें।',
     errorGeneric: 'अभी आपका पंजीकरण सहेजा नहीं जा सका। कृपया थोड़ी देर बाद फिर प्रयास करें।',
     backHome: 'होम पर वापस जाएँ',
@@ -176,7 +199,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: 'နေရာယူထားပါ',
     cardLead: 'အသုံးပြုမည့် device ကိုရွေးပြီး ဆက်သွယ်လိုသည့် email ကို ထည့်ပါ။',
     deviceLabel: 'သင့် device',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'အီးမေးလ်လိပ်စာ',
     emailPlaceholder: 'you@example.com',
@@ -187,6 +210,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: 'အစောပိုင်းဝင်ရောက်ခွင့်တွင် ပါဝင်ပေးသည့်အတွက် ကျေးဇူးတင်ပါသည်။ MIDORIGO ကို မကြာမီရရှိနိုင်မည်ဖြစ်ပြီး အစောပိုင်းဝင်ရောက်ခွင့် အပ်ဒိတ်နှင့် နောက်ဆင့်များကို email မှ ကြည့်ရှုပါ။',
     duplicateTitle: 'သင်သည် စာရင်းတွင်ရှိပြီးဖြစ်သည်',
     duplicateBody: 'ဤအီးမေးလ်သည် ထို device အတွက် စာရင်းသွင်းပြီးဖြစ်သည်။ MIDORIGO အစောပိုင်းဝင်ရောက်ခွင့် အဆင်သင့်ဖြစ်သောအခါ email ပို့ပါမည်။',
+    modalAction: 'ပင်မသို့ သွားရန်',
     errorConfig: 'Supabase ကို မသတ်မှတ်ရသေးပါ။ .env တွင် VITE_SUPABASE_URL နှင့် VITE_SUPABASE_ANON_KEY ထည့်ပါ။',
     errorGeneric: 'ယခုအချိန်တွင် စာရင်းသွင်းမှုကို မသိမ်းဆည်းနိုင်ပါ။ ခဏနားပြီး ထပ်မံစမ်းကြည့်ပါ။',
     backHome: 'ပင်မသို့ ပြန်သွားရန်',
@@ -198,7 +222,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: 'Giữ chỗ cho bạn',
     cardLead: 'Chọn thiết bị bạn định test, sau đó nhập email bạn muốn chúng tôi liên hệ.',
     deviceLabel: 'Thiết bị của bạn',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'Địa chỉ email',
     emailPlaceholder: 'you@example.com',
@@ -209,6 +233,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: 'Cảm ơn bạn đã tham gia truy cập sớm. MIDORIGO sẽ sớm có mặt. Hãy để ý email để nhận cập nhật truy cập sớm và các bước tiếp theo.',
     duplicateTitle: 'Bạn đã có trong danh sách',
     duplicateBody: 'Email này đã được đăng ký cho thiết bị đó. Chúng tôi sẽ gửi email khi truy cập sớm MIDORIGO sẵn sàng.',
+    modalAction: 'Về trang chủ',
     errorConfig: 'Supabase chưa được cấu hình. Hãy thêm VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY vào .env.',
     errorGeneric: 'Hiện tại chúng tôi chưa thể lưu đăng ký của bạn. Vui lòng thử lại sau ít phút.',
     backHome: 'Quay về trang chủ',
@@ -220,7 +245,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     cardTitle: 'Reserva tu lugar',
     cardLead: 'Elige el dispositivo con el que vas a probar la app y luego ingresa el correo con el que quieres que te contactemos.',
     deviceLabel: 'Tu dispositivo',
-    ios: 'iPhone / iPad',
+    ios: 'iOS',
     android: 'Android',
     emailLabel: 'Correo electrónico',
     emailPlaceholder: 'you@example.com',
@@ -231,6 +256,7 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     successBody: 'Gracias por unirte al acceso anticipado. MIDORIGO estará disponible pronto. Mantente atento a tu correo para recibir novedades de acceso anticipado y los siguientes pasos.',
     duplicateTitle: 'Ya estás en la lista',
     duplicateBody: 'Este correo ya está registrado para ese dispositivo. Te enviaremos un correo cuando el acceso anticipado de MIDORIGO esté listo.',
+    modalAction: 'Ir al inicio',
     errorConfig: 'Supabase todavía no está configurado. Agrega VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en .env.',
     errorGeneric: 'No pudimos guardar tu registro ahora mismo. Inténtalo de nuevo en un momento.',
     backHome: 'Volver al inicio',
@@ -243,13 +269,19 @@ function isDuplicateError(message: string) {
 }
 
 export function EarlyAccess() {
-  const { language } = useLocale();
+  const { language, t } = useLocale();
+  const navigate = useNavigate();
   const copy = useMemo(() => copyByLanguage[language] ?? copyByLanguage.en, [language]);
   const [platform, setPlatform] = useState<Platform>('ios');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMode, setSuccessMode] = useState<'idle' | 'success' | 'duplicate'>('idle');
+
+  function handleModalClose() {
+    setSuccessMode('idle');
+    navigate('/');
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -291,7 +323,20 @@ export function EarlyAccess() {
 
   return (
     <>
-      <PageHero eyebrow={copy.eyebrow} title={copy.title} intro={copy.intro} />
+      <section className="page-hero early-access-hero">
+        <div className="container narrow early-access-hero-inner">
+          <div className="early-access-logo-lockup" aria-label={`MIDORIGO ${t.common.appNameJa}`}>
+            <img src="/assets/midorigo-logo.png" alt="" width="48" height="48" />
+            <div>
+              <span>MIDORIGO</span>
+              <span lang="ja">{t.common.appNameJa}</span>
+            </div>
+          </div>
+          <p className="eyebrow">{copy.eyebrow}</p>
+          <h1>{copy.title}</h1>
+          <p className="lead">{copy.intro}</p>
+        </div>
+      </section>
 
       <Section className="surface-band">
         <div className="signup-shell">
@@ -309,6 +354,7 @@ export function EarlyAccess() {
                     onClick={() => setPlatform('ios')}
                     aria-pressed={platform === 'ios'}
                   >
+                    <PlatformIcon platform="ios" />
                     {copy.ios}
                   </button>
                   <button
@@ -317,6 +363,7 @@ export function EarlyAccess() {
                     onClick={() => setPlatform('android')}
                     aria-pressed={platform === 'android'}
                   >
+                    <PlatformIcon platform="android" />
                     {copy.android}
                   </button>
                 </div>
@@ -348,26 +395,34 @@ export function EarlyAccess() {
               </div>
             ) : null}
 
-            {successMode === 'success' ? (
-              <div className="signup-feedback success" role="status">
-                <strong>{copy.successTitle}</strong>
-                <p>{copy.successBody}</p>
-              </div>
-            ) : null}
-
-            {successMode === 'duplicate' ? (
-              <div className="signup-feedback success" role="status">
-                <strong>{copy.duplicateTitle}</strong>
-                <p>{copy.duplicateBody}</p>
-              </div>
-            ) : null}
-
             <Link className="inline-backlink" to="/">
               {copy.backHome}
             </Link>
           </div>
         </div>
       </Section>
+
+      {successMode !== 'idle' ? (
+        <div className="signup-modal-overlay" role="presentation">
+          <div
+            className="signup-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="signup-modal-title"
+          >
+            <div className="signup-modal-mark" aria-hidden="true">
+              {successMode === 'success' ? '✓' : '!'}
+            </div>
+            <h2 id="signup-modal-title">
+              {successMode === 'success' ? copy.successTitle : copy.duplicateTitle}
+            </h2>
+            <p>{successMode === 'success' ? copy.successBody : copy.duplicateBody}</p>
+            <button className="button primary" type="button" onClick={handleModalClose}>
+              {copy.modalAction}
+            </button>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

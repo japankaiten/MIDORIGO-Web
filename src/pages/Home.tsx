@@ -4,6 +4,20 @@ import { useLocale } from '../i18n';
 
 export function Home() {
   const { t } = useLocale();
+  const coreAreaImages = [
+    {
+      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Flea_market_in_Hikarigaoka_Park_2024-04-29.jpg',
+      alt: 'Flea market in Tokyo',
+    },
+    {
+      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Waseda_University_recycling_bins_20080625.jpg',
+      alt: 'Recycling bins in Japan',
+    },
+    {
+      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/A%20bulletin%20board%20at%20Hiraokano%20Shrine.jpg',
+      alt: 'Community bulletin board in Japan',
+    },
+  ];
 
   return (
     <>
@@ -27,30 +41,14 @@ export function Home() {
               </Link>
             </div>
           </div>
-          <div className="phone-showcase" aria-label={t.home.previewLabel}>
-            <div className="phone-frame">
-              <div className="phone-status" />
-              <div className="app-card primary-card">
-                <span>{t.home.previewCardLabel}</span>
-                <strong>{t.home.previewCardTitle}</strong>
-                <small>{t.home.previewCardNote}</small>
-              </div>
-              <div className="scan-row">
-                <div>
-                  <span className="mini-label">{t.home.previewScanLabel}</span>
-                  <strong>{t.home.previewScanTitle}</strong>
-                  <small>{t.home.previewScanNote}</small>
-                </div>
-                <span className="scan-icon" aria-hidden="true">
-                  M
-                </span>
-              </div>
-              <div className="mini-list">
-                {t.home.previewPills.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-            </div>
+          <div className="hero-image-showcase" aria-label={t.home.previewLabel}>
+            <img
+              className="hero-image"
+              src="/assets/midorigoweb-hero-image.png"
+              alt={t.home.previewLabel}
+              width="900"
+              height="900"
+            />
           </div>
         </div>
       </section>
@@ -109,20 +107,20 @@ export function Home() {
 
       <Section title={t.home.sections.coreAreas}>
         <div className="screenshot-grid" aria-label="MIDORIGO core app areas">
-          {t.home.appAreas.map((item) => (
+          {t.home.appAreas.map((item, index) => (
             <div key={item.title} className="screenshot-card">
+              <div className="screenshot-visual">
+                <img
+                  src={coreAreaImages[index]?.src}
+                  alt={coreAreaImages[index]?.alt ?? item.title}
+                  loading="lazy"
+                />
+                <div className="screenshot-overlay" aria-hidden="true" />
+              </div>
               <span>{item.label}</span>
               <strong>{item.title}</strong>
             </div>
           ))}
-        </div>
-      </Section>
-
-      <Section title={t.home.sections.comingSoon} className="surface-band">
-        <div id="availability" className="store-panel">
-          {/* TODO: Replace placeholders with final App Store and Google Play URLs after store approval. */}
-          <span className="store-badge">{t.home.storeBadges.appStore}</span>
-          <span className="store-badge">{t.home.storeBadges.playStore}</span>
         </div>
       </Section>
 
