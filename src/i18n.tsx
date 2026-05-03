@@ -371,7 +371,7 @@ const english: LocaleContent = {
     requestSteps: [
       'Email japankaiten@gmail.com from your account email.',
       'Use the subject line: Account deletion request.',
-      'Include your user ID if it is available in the app.',
+      'Include your user ID if it is available in the app, or your registered email address.',
     ],
     sections: [
       { title: 'What is deleted or anonymized', paragraphs: ['Account profile information, saved location setup, notification preferences, uploaded images, reports, second-hand listings, jobs, real estate posts, event posts, help requests, car listings, messages, and related user content may be deleted or anonymized where technically and legally possible.'] },
@@ -713,7 +713,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       requestSteps: [
         '登録メールアドレスから japankaiten@gmail.com へ送信してください。',
         '件名は「Account deletion request」にしてください。',
-        'わかる場合はユーザーIDを記載してください。',
+        'わかる場合はユーザーIDを、難しい場合は登録メールアドレスを記載してください。',
       ],
       sections: [
         {

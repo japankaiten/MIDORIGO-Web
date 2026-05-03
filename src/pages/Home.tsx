@@ -6,16 +6,16 @@ export function Home() {
   const { t } = useLocale();
   const coreAreaImages = [
     {
-      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Flea_market_in_Hikarigaoka_Park_2024-04-29.jpg',
-      alt: 'Flea market in Tokyo',
+      src: '/assets/homepage/Second-hand%20goods%20and%20local%20posts.webp',
+      alt: 'Second-hand goods and local posts',
     },
     {
-      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Waseda_University_recycling_bins_20080625.jpg',
-      alt: 'Recycling bins in Japan',
+      src: '/assets/homepage/Garbage%20calendar%20and%20AI%20item%20checks.webp',
+      alt: 'Garbage calendar and AI item checks',
     },
     {
-      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/A%20bulletin%20board%20at%20Hiraokano%20Shrine.jpg',
-      alt: 'Community bulletin board in Japan',
+      src: '/assets/homepage/bulletin.webp',
+      alt: 'Jobs, events, help, real estate, and cars',
     },
   ];
 

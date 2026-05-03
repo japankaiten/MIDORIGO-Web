@@ -907,8 +907,17 @@ h3 {
   font-weight: 750;
 }
 
+.contact-field {
+  display: grid;
+  gap: 7px;
+}
+
+.contact-field-label {
+  color: var(--color-secondary);
+  font-weight: 750;
+}
+
 .contact-form input,
-.contact-form select,
 .contact-form textarea {
   width: 100%;
   border: 1px solid var(--color-border);
@@ -920,6 +929,64 @@ h3 {
 
 .contact-form textarea {
   resize: vertical;
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select-trigger,
+.custom-select-option {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px;
+  text-align: left;
+}
+
+.custom-select-trigger.open {
+  border-color: var(--color-primary);
+}
+
+.custom-select-caret {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.custom-select-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 18px 40px rgba(31, 41, 51, 0.12);
+}
+
+.custom-select-option {
+  padding: 11px 12px;
+  text-align: left;
+}
+
+.custom-select-option.active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 8%, white);
 }
 
 .signup-shell {
@@ -1101,6 +1168,56 @@ h3 {
   background: color-mix(in srgb, var(--color-primary) 12%, white);
   font-size: 1.6rem;
   font-weight: 800;
+}
+
+.signup-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(31, 41, 51, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.signup-loading-modal {
+  display: grid;
+  gap: 14px;
+  width: min(440px, 100%);
+  padding: 28px 24px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 28px 70px rgba(31, 41, 51, 0.18);
+  text-align: center;
+}
+
+.signup-loading-modal h2,
+.signup-loading-modal p {
+  margin: 0;
+}
+
+.signup-loading-modal p {
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+.signup-loading-spinner {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 2px;
+  border: 3px solid color-mix(in srgb, var(--color-primary) 18%, white);
+  border-top-color: var(--color-primary);
+  border-radius: 999px;
+  animation: signup-spin 0.85s linear infinite;
+}
+
+@keyframes signup-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .support-note {

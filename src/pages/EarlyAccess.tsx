@@ -35,6 +35,8 @@ type EarlyAccessCopy = {
   emailPlaceholder: string;
   submit: string;
   submitting: string;
+  loadingTitle: string;
+  loadingBody: string;
   finePrint: string;
   successTitle: string;
   successBody: string;
@@ -61,6 +63,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: 'Register early access for free',
     submitting: 'Registering...',
+    loadingTitle: 'Registering your early access',
+    loadingBody: 'Please wait while we save your details.',
     finePrint:
       'We store your email and device preference to manage MIDORIGO early access, launch communication, and future app onboarding. If MIDORIGO moves into general release, this registration may remain linked to your future access unless you request deletion.',
     successTitle: 'You are registered',
@@ -87,6 +91,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: '無料で先行登録する',
     submitting: '登録中...',
+    loadingTitle: '先行登録を保存しています',
+    loadingBody: '内容を保存しています。しばらくお待ちください。',
     finePrint:
       'このメールアドレスと端末情報は、MIDORIGOの先行案内、公開連絡、今後のアプリ利用開始手続きのために保存されます。MIDORIGOが一般公開に移行した場合、この登録情報は削除依頼がない限り今後の利用情報と紐づくことがあります。',
     successTitle: '登録が完了しました',
@@ -113,6 +119,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: '무료 얼리 액세스 등록',
     submitting: '등록 중...',
+    loadingTitle: '얼리 액세스 등록 중',
+    loadingBody: '입력한 정보를 저장하는 동안 잠시만 기다려 주세요.',
     finePrint: '이 이메일과 기기 정보는 MIDORIGO 얼리 액세스 안내, 출시 소식, 이후 앱 온보딩을 위해 저장됩니다. MIDORIGO가 정식 출시로 이어질 경우 삭제 요청이 없는 한 이 등록 정보는 이후 접근 정보와 연결될 수 있습니다.',
     successTitle: '등록이 완료되었습니다',
     successBody: '얼리 액세스에 등록해 주셔서 감사합니다. MIDORIGO는 곧 제공될 예정입니다. 얼리 액세스 안내와 다음 정보를 이메일로 확인해 주세요.',
@@ -136,6 +144,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: '免费注册抢先体验',
     submitting: '提交中...',
+    loadingTitle: '正在提交抢先注册',
+    loadingBody: '正在保存你的信息，请稍候。',
     finePrint: '我们会保存你的邮箱和设备偏好，用于 MIDORIGO 抢先体验、上线通知以及后续应用启用。如果 MIDORIGO 进入正式发布阶段，除非你请求删除，这份注册信息可能会继续关联到你未来的访问。',
     successTitle: '你已注册成功',
     successBody: '感谢你加入抢先体验。MIDORIGO 即将开放，请留意邮箱中的抢先体验通知和后续说明。',
@@ -159,6 +169,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: 'Daftar akses awal gratis',
     submitting: 'Mendaftarkan...',
+    loadingTitle: 'Mendaftarkan akses awal Anda',
+    loadingBody: 'Mohon tunggu sebentar saat kami menyimpan detail Anda.',
     finePrint: 'Kami menyimpan email dan preferensi perangkat Anda untuk mengelola akses awal MIDORIGO, komunikasi peluncuran, dan proses onboarding aplikasi berikutnya. Jika MIDORIGO masuk ke rilis umum, pendaftaran ini dapat tetap terhubung ke akses Anda di masa depan kecuali Anda meminta penghapusan.',
     successTitle: 'Pendaftaran berhasil',
     successBody: 'Terima kasih sudah mendaftar akses awal. MIDORIGO akan segera tersedia. Mohon periksa email Anda untuk pembaruan akses awal dan langkah berikutnya.',
@@ -182,6 +194,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: 'मुफ्त प्रारंभिक एक्सेस दर्ज करें',
     submitting: 'पंजीकरण हो रहा है...',
+    loadingTitle: 'आपका प्रारंभिक एक्सेस पंजीकरण किया जा रहा है',
+    loadingBody: 'आपकी जानकारी सहेजी जा रही है। कृपया थोड़ी देर प्रतीक्षा करें।',
     finePrint: 'हम आपका ईमेल और डिवाइस पसंद MIDORIGO प्रारंभिक एक्सेस, लॉन्च संचार और भविष्य के ऐप ऑनबोर्डिंग के लिए सहेजते हैं। यदि MIDORIGO सामान्य रिलीज़ में जाता है, तो डिलीशन अनुरोध न होने पर यह पंजीकरण आपके भविष्य के एक्सेस से जुड़ा रह सकता है।',
     successTitle: 'आपका पंजीकरण हो गया',
     successBody: 'प्रारंभिक एक्सेस में जुड़ने के लिए धन्यवाद। MIDORIGO जल्द उपलब्ध होगा। कृपया प्रारंभिक एक्सेस अपडेट और अगले चरणों के लिए अपना ईमेल देखते रहें।',
@@ -205,6 +219,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: 'အခမဲ့ အစောပိုင်းဝင်ရောက်ခွင့် စာရင်းသွင်းရန်',
     submitting: 'စာရင်းသွင်းနေသည်...',
+    loadingTitle: 'အစောပိုင်းဝင်ရောက်ခွင့်ကို စာရင်းသွင်းနေသည်',
+    loadingBody: 'သင့်အချက်အလက်များကို သိမ်းဆည်းနေပါသည်။ ခဏစောင့်ပါ။',
     finePrint: 'ဤအီးမေးလ်နှင့် device ရွေးချယ်မှုကို MIDORIGO အစောပိုင်းဝင်ရောက်ခွင့်၊ ထုတ်ဝေမှုဆိုင်ရာ အသိပေးချက်များနှင့် နောင်လာမည့် app onboarding အတွက် သိမ်းဆည်းမည်။ MIDORIGO သည် public release သို့ ရောက်ရှိသွားပါက ဖျက်ပစ်ရန်မတောင်းဆိုသရွေ့ ဤစာရင်းသွင်းမှုသည် နောင်အသုံးပြုခွင့်နှင့် ဆက်နွယ်နေနိုင်သည်။',
     successTitle: 'စာရင်းသွင်းမှု အောင်မြင်ပါသည်',
     successBody: 'အစောပိုင်းဝင်ရောက်ခွင့်တွင် ပါဝင်ပေးသည့်အတွက် ကျေးဇူးတင်ပါသည်။ MIDORIGO ကို မကြာမီရရှိနိုင်မည်ဖြစ်ပြီး အစောပိုင်းဝင်ရောက်ခွင့် အပ်ဒိတ်နှင့် နောက်ဆင့်များကို email မှ ကြည့်ရှုပါ။',
@@ -228,6 +244,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: 'Đăng ký dùng thử miễn phí',
     submitting: 'Đang đăng ký...',
+    loadingTitle: 'Đang đăng ký truy cập sớm',
+    loadingBody: 'Vui lòng chờ trong khi chúng tôi lưu thông tin của bạn.',
     finePrint: 'Chúng tôi lưu email và lựa chọn thiết bị của bạn để quản lý truy cập sớm MIDORIGO, thông báo phát hành và quá trình vào app sau này. Nếu MIDORIGO chuyển sang phát hành rộng rãi, đăng ký này có thể vẫn gắn với quyền truy cập sau này của bạn trừ khi bạn yêu cầu xóa.',
     successTitle: 'Bạn đã đăng ký thành công',
     successBody: 'Cảm ơn bạn đã tham gia truy cập sớm. MIDORIGO sẽ sớm có mặt. Hãy để ý email để nhận cập nhật truy cập sớm và các bước tiếp theo.',
@@ -251,6 +269,8 @@ const copyByLanguage: Record<LanguageCode, EarlyAccessCopy> = {
     emailPlaceholder: 'you@example.com',
     submit: 'Regístrate gratis al acceso anticipado',
     submitting: 'Registrando...',
+    loadingTitle: 'Registrando tu acceso anticipado',
+    loadingBody: 'Espera un momento mientras guardamos tus datos.',
     finePrint: 'Guardamos tu correo y tu preferencia de dispositivo para gestionar el acceso anticipado de MIDORIGO, la comunicación de lanzamiento y la futura incorporación a la app. Si MIDORIGO pasa a una versión pública, este registro puede seguir vinculado a tu acceso futuro salvo que solicites su eliminación.',
     successTitle: 'Tu registro fue exitoso',
     successBody: 'Gracias por unirte al acceso anticipado. MIDORIGO estará disponible pronto. Mantente atento a tu correo para recibir novedades de acceso anticipado y los siguientes pasos.',
@@ -413,6 +433,16 @@ export function EarlyAccess() {
             <button className="button primary" type="button" onClick={handleModalClose}>
               {copy.modalAction}
             </button>
+          </div>
+        </div>
+      ) : null}
+
+      {isSubmitting ? (
+        <div className="signup-loading-overlay" role="presentation" aria-hidden="true">
+          <div className="signup-loading-modal" role="status" aria-live="polite">
+            <div className="signup-loading-spinner" aria-hidden="true" />
+            <h2>{copy.loadingTitle}</h2>
+            <p>{copy.loadingBody}</p>
           </div>
         </div>
       ) : null}
