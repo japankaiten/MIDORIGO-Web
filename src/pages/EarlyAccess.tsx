@@ -325,13 +325,6 @@ export function EarlyAccess() {
     <>
       <section className="page-hero early-access-hero">
         <div className="container narrow early-access-hero-inner">
-          <div className="early-access-logo-lockup" aria-label={`MIDORIGO ${t.common.appNameJa}`}>
-            <img src="/assets/midorigo-logo.png" alt="" width="48" height="48" />
-            <div>
-              <span>MIDORIGO</span>
-              <span lang="ja">{t.common.appNameJa}</span>
-            </div>
-          </div>
           <p className="eyebrow">{copy.eyebrow}</p>
           <h1>{copy.title}</h1>
           <p className="lead">{copy.intro}</p>

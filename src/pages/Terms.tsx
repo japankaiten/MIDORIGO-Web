@@ -24,7 +24,10 @@ export function Terms() {
       <PageHero eyebrow={t.terms.eyebrow} title={t.terms.title} intro={t.terms.intro} />
       <Section>
         <InfoCard title={t.common.termsDetails} tone="notice">
-          <p>{`Effective date: ${t.common.effectiveDate}. Operator: ${t.common.operator}. Address: ${t.common.address}.`}</p>
+          <p>{`Effective date: ${t.common.effectiveDate}. Operator: ${t.common.operator}.`}</p>
+          <p>{`Corporate number: ${t.common.corporateNumber}.`}</p>
+          <p>{`Address: ${t.common.address}.`}</p>
+          <p>{`Phone: ${t.common.phone}.`}</p>
         </InfoCard>
 
         <div className="legal-stack">

@@ -35,6 +35,10 @@ export function Layout() {
     { ...routes[4], label: t.routes.support },
     { ...routes[5], label: t.routes.deleteAccount },
   ];
+  const mobileMenuLinks = [
+    { href: '/early-access', label: t.home.ctaAvailability },
+    ...localizedRoutes.slice(1, 5).map((route) => ({ href: route.href, label: route.label })),
+  ];
 
   useEffect(() => {
     document.body.style.overflow = isLanguageOpen || isMenuOpen ? 'hidden' : '';
@@ -193,14 +197,8 @@ export function Layout() {
           aria-label={t.common.menu ?? 'Menu'}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="mobile-menu-header">
-            <span>{APP_NAME}</span>
-            <button className="mobile-menu-close" type="button" onClick={() => setIsMenuOpen(false)}>
-              ×
-            </button>
-          </div>
           <nav className="mobile-menu-nav" aria-label="Mobile navigation">
-            {localizedRoutes.slice(1, 5).map((route) => (
+            {mobileMenuLinks.map((route) => (
               <NavLink key={route.href} to={route.href} onClick={() => setIsMenuOpen(false)}>
                 {route.label}
               </NavLink>

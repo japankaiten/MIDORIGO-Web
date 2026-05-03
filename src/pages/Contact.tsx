@@ -70,7 +70,11 @@ export function Contact() {
               <a href={`mailto:${t.common.supportEmail}`}>{t.common.supportEmail}</a>
               {after}
             </p>
-            <p className="note">{t.contact.supportNote}</p>
+            <h3>{t.contact.companyDetailsTitle}</h3>
+            <p>{t.common.operator}</p>
+            <p>{`法人番号 / Corporate number: ${t.common.corporateNumber}`}</p>
+            <p>{t.common.address}</p>
+            <p>{`TEL: ${t.common.phone}`}</p>
           </aside>
         </div>
       </Section>

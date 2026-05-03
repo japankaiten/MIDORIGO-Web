@@ -40,7 +40,10 @@ type LocaleContent = {
     independent: string;
     effectiveDate: string;
     operator: string;
+    operatorJa?: string;
+    corporateNumber: string;
     address: string;
+    phone: string;
     supportEmail: string;
   };
   home: {
@@ -104,6 +107,7 @@ type LocaleContent = {
     supportTitle: string;
     supportBody: string;
     supportNote: string;
+    companyDetailsTitle: string;
     categories: string[];
   };
   support: {
@@ -146,8 +150,11 @@ const english: LocaleContent = {
     copyright: '© 2026 MIDORIGO',
     independent: 'Independent platform unless separately stated.',
     effectiveDate: 'April 18, 2026',
-    operator: 'Japan Kaiten company',
-    address: 'Available upon valid request where required.',
+    operator: '株式会社海天 (Kabushiki Kaisha Kaiten)',
+    operatorJa: '株式会社海天',
+    corporateNumber: '5320001007387',
+    address: '14-24 Kamegawa Higashimachi, Beppu, Oita 874-0013, Japan',
+    phone: '0977-75-9554',
     supportEmail: 'japankaiten@gmail.com',
   },
   home: {
@@ -326,7 +333,7 @@ const english: LocaleContent = {
   contact: {
     eyebrow: 'Contact',
     title: 'Get in touch with MIDORIGO',
-    intro: 'Use the form to prepare an email to support. No backend is connected on this static website.',
+    intro: 'Choose a category, write your message, and contact MIDORIGO support.',
     emailLabel: 'Your email',
     categoryLabel: 'Category',
     messageLabel: 'Message',
@@ -335,7 +342,8 @@ const english: LocaleContent = {
     submit: 'Open email',
     supportTitle: 'Support email',
     supportBody: 'Email japankaiten@gmail.com for app support, privacy requests, municipality content corrections, and partner inquiries.',
-    supportNote: 'A production contact form backend can be added later. Until then, this form opens the user’s email app.',
+    supportNote: 'You can also contact support directly using the email address below.',
+    companyDetailsTitle: 'Company details',
     categories: ['App support', 'Marketplace listing/report', 'Data/privacy request', 'Municipality/content correction', 'Business/partner inquiry'],
   },
   support: {
@@ -442,8 +450,11 @@ const translations: Record<LanguageCode, LocaleContent> = {
       termsDetails: '規約詳細',
       independent: '別途明記がない限り独立したプラットフォームです。',
       effectiveDate: '2026年4月18日',
-      operator: 'Japan Kaiten company',
-      address: '必要な場合は有効な請求に応じて提供します。',
+      operator: '株式会社海天',
+      operatorJa: '株式会社海天',
+      corporateNumber: '5320001007387',
+      address: '〒874-0013 大分県別府市亀川東町14番24号',
+      phone: '0977-75-9554',
     },
     home: {
       eyebrow: '日本の居住者向け循環型経済アプリ',
@@ -523,7 +534,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: 'お問い合わせ',
       title: 'MIDORIGOへ連絡する',
-      intro: 'このフォームはサポートメールを作成します。静的サイトのためバックエンド接続はありません。',
+      intro: 'カテゴリを選び、内容を入力して、MIDORIGOサポートへご連絡ください。',
       emailLabel: 'メールアドレス',
       categoryLabel: 'カテゴリ',
       messageLabel: '内容',
@@ -532,7 +543,8 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: 'メールを開く',
       supportTitle: 'サポートメール',
       supportBody: 'アプリサポート、プライバシー依頼、自治体情報修正、提携相談は japankaiten@gmail.com までご連絡ください。',
-      supportNote: '将来的に問い合わせフォームのバックエンドを追加できます。それまではメールアプリを開く形式です。',
+      supportNote: '下記のメールアドレスから直接ご連絡いただくこともできます。',
+      companyDetailsTitle: '会社情報',
       categories: ['アプリサポート', '掲載・報告', 'データ・プライバシー依頼', '自治体内容の修正', '提携・事業問い合わせ'],
     },
     privacy: {
@@ -962,7 +974,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: '문의',
       title: 'MIDORIGO에 연락하기',
-      intro: '이 양식은 지원 이메일 작성을 돕습니다. 이 정적 웹사이트에는 백엔드가 연결되어 있지 않습니다.',
+      intro: '카테고리를 선택하고 내용을 입력해 MIDORIGO 지원팀에 연락해 주세요.',
       emailLabel: '이메일 주소',
       categoryLabel: '카테고리',
       messageLabel: '메시지',
@@ -971,7 +983,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: '이메일 열기',
       supportTitle: '지원 이메일',
       supportBody: '앱 지원, 개인정보 요청, 지자체 정보 수정, 제휴 문의는 japankaiten@gmail.com 으로 보내주세요.',
-      supportNote: '운영 환경용 문의 폼 백엔드는 나중에 추가할 수 있습니다. 현재는 사용자의 이메일 앱을 여는 방식입니다.',
+      supportNote: '아래 이메일 주소로 직접 연락하실 수도 있습니다.',
       categories: ['앱 지원', '게시물/신고', '데이터/개인정보 요청', '지자체/콘텐츠 수정', '비즈니스/제휴 문의'],
     },
     support: {
@@ -1260,7 +1272,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: '联系',
       title: '联系 MIDORIGO',
-      intro: '此表单用于帮助你准备发送给支持团队的邮件。这个静态网站未连接后端服务。',
+      intro: '请选择类别，填写内容，并联系 MIDORIGO 支持团队。',
       emailLabel: '你的邮箱',
       categoryLabel: '类别',
       messageLabel: '消息内容',
@@ -1269,7 +1281,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: '打开邮件',
       supportTitle: '支持邮箱',
       supportBody: '如需应用支持、隐私请求、自治体内容更正或合作咨询，请发送邮件至 japankaiten@gmail.com。',
-      supportNote: '后续可以添加正式联系表单后端。当前此表单会打开用户的邮件应用。',
+      supportNote: '你也可以直接使用下方邮箱联系支持团队。',
       categories: ['应用支持', '发布/举报', '数据/隐私请求', '自治体/内容更正', '商务/合作咨询'],
     },
     support: {
@@ -1501,7 +1513,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: 'Kontak',
       title: 'Hubungi MIDORIGO',
-      intro: 'Gunakan formulir ini untuk menyiapkan email ke dukungan. Tidak ada backend yang terhubung di situs statis ini.',
+      intro: 'Pilih kategori, tulis pesan Anda, dan hubungi dukungan MIDORIGO.',
       emailLabel: 'Email Anda',
       categoryLabel: 'Kategori',
       messageLabel: 'Pesan',
@@ -1510,7 +1522,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: 'Buka email',
       supportTitle: 'Email dukungan',
       supportBody: 'Email ke japankaiten@gmail.com untuk dukungan aplikasi, permintaan privasi, koreksi konten pemerintah daerah, dan pertanyaan mitra.',
-      supportNote: 'Backend formulir kontak produksi dapat ditambahkan nanti. Untuk saat ini, formulir ini membuka aplikasi email pengguna.',
+      supportNote: 'Anda juga dapat menghubungi dukungan langsung melalui alamat email di bawah ini.',
       categories: ['Dukungan aplikasi', 'Listing/laporan', 'Permintaan data/privasi', 'Koreksi pemerintah daerah/konten', 'Pertanyaan bisnis/mitra'],
     },
     support: {
@@ -1727,7 +1739,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: 'संपर्क',
       title: 'MIDORIGO से संपर्क करें',
-      intro: 'सपोर्ट को ईमेल तैयार करने के लिए इस फ़ॉर्म का उपयोग करें। इस स्थिर वेबसाइट पर कोई बैकएंड जुड़ा नहीं है।',
+      intro: 'श्रेणी चुनें, अपना संदेश लिखें और MIDORIGO सपोर्ट से संपर्क करें।',
       emailLabel: 'आपका ईमेल',
       categoryLabel: 'श्रेणी',
       messageLabel: 'संदेश',
@@ -1736,7 +1748,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: 'ईमेल खोलें',
       supportTitle: 'सपोर्ट ईमेल',
       supportBody: 'ऐप सहायता, गोपनीयता अनुरोध, नगरपालिका सामग्री सुधार और पार्टनर पूछताछ के लिए japankaiten@gmail.com पर ईमेल करें।',
-      supportNote: 'भविष्य में प्रोडक्शन संपर्क फ़ॉर्म बैकएंड जोड़ा जा सकता है। अभी यह फ़ॉर्म उपयोगकर्ता की ईमेल ऐप खोलता है।',
+      supportNote: 'आप नीचे दिए गए ईमेल पते से सीधे भी संपर्क कर सकते हैं।',
       categories: ['ऐप सहायता', 'लिस्टिंग/रिपोर्ट', 'डेटा/गोपनीयता अनुरोध', 'नगरपालिका/सामग्री सुधार', 'बिज़नेस/पार्टनर पूछताछ'],
     },
     support: {
@@ -1953,7 +1965,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: 'ဆက်သွယ်ရန်',
       title: 'MIDORIGO သို့ ဆက်သွယ်ရန်',
-      intro: 'Support သို့ ပို့မည့် email ကို ပြင်ဆင်ရန် ဤ form ကို အသုံးပြုပါ။ ဤ static website တွင် backend မချိတ်ဆက်ထားပါ။',
+      intro: 'အမျိုးအစားရွေးပြီး မက်ဆေ့ချ်ရေးကာ MIDORIGO support ကို ဆက်သွယ်ပါ။',
       emailLabel: 'သင့်အီးမေးလ်',
       categoryLabel: 'အမျိုးအစား',
       messageLabel: 'မက်ဆေ့ချ်',
@@ -1962,7 +1974,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: 'အီးမေးလ်ဖွင့်ရန်',
       supportTitle: 'Support email',
       supportBody: 'App support, privacy request, municipality content correction နှင့် partner inquiry များအတွက် japankaiten@gmail.com သို့ အီးမေးလ်ပို့ပါ။',
-      supportNote: 'နောက်ပိုင်းတွင် production contact form backend ထည့်နိုင်သည်။ လက်ရှိတွင် ဤ form သည် အသုံးပြုသူ၏ email app ကိုဖွင့်ပေးသည်။',
+      supportNote: 'အောက်ပါ email လိပ်စာမှ တိုက်ရိုက်ဆက်သွယ်နိုင်ပါသည်။',
       categories: ['App support', 'Listing/report', 'Data/privacy request', 'Municipality/content correction', 'Business/partner inquiry'],
     },
     support: {
@@ -2179,7 +2191,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: 'Liên hệ',
       title: 'Liên hệ với MIDORIGO',
-      intro: 'Dùng biểu mẫu này để chuẩn bị email gửi bộ phận hỗ trợ. Không có backend nào được kết nối trên website tĩnh này.',
+      intro: 'Chọn danh mục, viết nội dung và liên hệ bộ phận hỗ trợ của MIDORIGO.',
       emailLabel: 'Email của bạn',
       categoryLabel: 'Danh mục',
       messageLabel: 'Nội dung',
@@ -2188,7 +2200,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: 'Mở email',
       supportTitle: 'Email hỗ trợ',
       supportBody: 'Gửi email đến japankaiten@gmail.com cho hỗ trợ ứng dụng, yêu cầu quyền riêng tư, sửa nội dung địa phương và hỏi về đối tác.',
-      supportNote: 'Backend biểu mẫu liên hệ chính thức có thể được thêm sau. Hiện tại biểu mẫu này sẽ mở ứng dụng email của người dùng.',
+      supportNote: 'Bạn cũng có thể liên hệ trực tiếp qua địa chỉ email bên dưới.',
       categories: ['Hỗ trợ ứng dụng', 'Tin đăng/báo cáo', 'Yêu cầu dữ liệu/quyền riêng tư', 'Sửa nội dung/chính quyền địa phương', 'Hỏi về kinh doanh/đối tác'],
     },
     support: {
@@ -2405,7 +2417,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
     contact: {
       eyebrow: 'Contacto',
       title: 'Ponte en contacto con MIDORIGO',
-      intro: 'Usa este formulario para preparar un correo a soporte. No hay backend conectado en este sitio estático.',
+      intro: 'Elige una categoría, escribe tu mensaje y contacta al soporte de MIDORIGO.',
       emailLabel: 'Tu correo',
       categoryLabel: 'Categoría',
       messageLabel: 'Mensaje',
@@ -2414,7 +2426,7 @@ const translations: Record<LanguageCode, LocaleContent> = {
       submit: 'Abrir correo',
       supportTitle: 'Correo de soporte',
       supportBody: 'Escribe a japankaiten@gmail.com para soporte de la app, solicitudes de privacidad, correcciones de contenido municipal y consultas de socios.',
-      supportNote: 'Más adelante se puede añadir un backend para el formulario de contacto. Por ahora, este formulario abre la app de correo del usuario.',
+      supportNote: 'También puedes contactar al soporte directamente con el correo que aparece abajo.',
       categories: ['Soporte de la app', 'Publicación/reporte', 'Solicitud de datos/privacidad', 'Corrección municipal/contenido', 'Consulta comercial/socios'],
     },
     support: {

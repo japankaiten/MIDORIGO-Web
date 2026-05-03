@@ -36,6 +36,9 @@ export function Privacy() {
       <Section>
         <InfoCard title={t.common.policyDetails} tone="notice">
           <p>{`Effective date: ${t.common.effectiveDate}. Operator: ${t.common.operator}.`}</p>
+          <p>{`Corporate number: ${t.common.corporateNumber}.`}</p>
+          <p>{`Address: ${t.common.address}.`}</p>
+          <p>{`Phone: ${t.common.phone}.`}</p>
         </InfoCard>
 
         <div className="legal-stack">
