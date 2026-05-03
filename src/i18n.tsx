@@ -30,6 +30,7 @@ type LocaleContent = {
   routes: { home: string; privacy: string; terms: string; contact: string; support: string; deleteAccount: string };
   common: {
     language: string;
+    menu: string;
     appNameJa: string;
     footerAbout: string;
     legalAndSupport: string;
@@ -135,6 +136,7 @@ const english: LocaleContent = {
   },
   common: {
     language: 'Language',
+    menu: 'Menu',
     appNameJa: 'ミドリゴ',
     footerAbout:
       'Circular economy listings, local trade, neighborhood information, and municipality-oriented waste support for residents in Japan.',
@@ -377,12 +379,53 @@ function shallowTranslate(base: LocaleContent, overrides: DeepPartial<LocaleCont
     ...overrides,
     routes: { ...base.routes, ...overrides.routes },
     common: { ...base.common, ...overrides.common },
-    home: { ...base.home, ...overrides.home, sections: { ...base.home.sections, ...overrides.home?.sections } },
-    privacy: { ...base.privacy, ...overrides.privacy },
-    terms: { ...base.terms, ...overrides.terms },
-    contact: { ...base.contact, ...overrides.contact },
-    support: { ...base.support, ...overrides.support },
-    deleteAccount: { ...base.deleteAccount, ...overrides.deleteAccount },
+    home: {
+      ...base.home,
+      ...overrides.home,
+      sections: { ...base.home.sections, ...overrides.home?.sections },
+      previewPills: overrides.home?.previewPills as LocaleContent['home']['previewPills'] ?? base.home.previewPills,
+      features: overrides.home?.features as LocaleContent['home']['features'] ?? base.home.features,
+      marketplaceCategories:
+        overrides.home?.marketplaceCategories as LocaleContent['home']['marketplaceCategories'] ?? base.home.marketplaceCategories,
+      appAspects: overrides.home?.appAspects as LocaleContent['home']['appAspects'] ?? base.home.appAspects,
+      platformBoundaries:
+        overrides.home?.platformBoundaries as LocaleContent['home']['platformBoundaries'] ?? base.home.platformBoundaries,
+      residentsParagraphs:
+        overrides.home?.residentsParagraphs as LocaleContent['home']['residentsParagraphs'] ?? base.home.residentsParagraphs,
+      residentsChecks:
+        overrides.home?.residentsChecks as LocaleContent['home']['residentsChecks'] ?? base.home.residentsChecks,
+      appAreas: overrides.home?.appAreas as LocaleContent['home']['appAreas'] ?? base.home.appAreas,
+      storeBadges: { ...base.home.storeBadges, ...overrides.home?.storeBadges },
+      faq: overrides.home?.faq as LocaleContent['home']['faq'] ?? base.home.faq,
+    },
+    privacy: {
+      ...base.privacy,
+      ...overrides.privacy,
+      sections: overrides.privacy?.sections as LocaleContent['privacy']['sections'] ?? base.privacy.sections,
+    },
+    terms: {
+      ...base.terms,
+      ...overrides.terms,
+      sections: overrides.terms?.sections as LocaleContent['terms']['sections'] ?? base.terms.sections,
+    },
+    contact: {
+      ...base.contact,
+      ...overrides.contact,
+      categories: overrides.contact?.categories as LocaleContent['contact']['categories'] ?? base.contact.categories,
+    },
+    support: {
+      ...base.support,
+      ...overrides.support,
+      faq: overrides.support?.faq as LocaleContent['support']['faq'] ?? base.support.faq,
+    },
+    deleteAccount: {
+      ...base.deleteAccount,
+      ...overrides.deleteAccount,
+      requestSteps:
+        overrides.deleteAccount?.requestSteps as LocaleContent['deleteAccount']['requestSteps'] ?? base.deleteAccount.requestSteps,
+      sections:
+        overrides.deleteAccount?.sections as LocaleContent['deleteAccount']['sections'] ?? base.deleteAccount.sections,
+    },
   };
 }
 
